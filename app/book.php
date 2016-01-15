@@ -42,12 +42,13 @@ if(empty($carr[0][0])||$carr[0][0]==null)
 $nameReg = '/height="11" \/>.*logout/';
 preg_match_all($nameReg, $html, $nameArr);
 
-echo substr($nameArr[0][0],14,-37);
 
 $numReg = '/<p>.*<b/';
 preg_match_all($numReg, $html, $numArr);
 
 $bookNum = substr($numArr[0][0],45,-25);
+
+
 
 
 /*
@@ -68,11 +69,10 @@ $place      = $arr['0']['5'];
 	<!-- 新 Bootstrap 核心 CSS 文件 -->
     <!--<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
     <link rel="stylesheet" type="text/css" href="../public/css/bootstrap.min.css">
-    <script type="text/javascript" src="../public/js/prototype.js"></script>
 	<title>图书借阅查询|山东理工大学</title>
 	<style type="text/css">
         .row{text-align: center; margin-top: 50px;}
-        h2{margin-bottom: 50px;}
+        .user{margin: 20px auto;}
         label{line-height: 38px;}
         .main{width:600px;margin:0 auto;}
         table td{text-align:center;}
@@ -82,6 +82,7 @@ $place      = $arr['0']['5'];
 	<div class="container">
 		<div class="row">
 			<h2>图书借阅</h2>
+			<div class="user"><p>欢迎您：<?php echo substr($nameArr[0][0],14,-37);?></p></div>
 			<div class="col-md-12">
 				<div class="table-responsive">
 					<table  class="table table-bordered">
@@ -93,7 +94,14 @@ $place      = $arr['0']['5'];
 						</tr>
 						<?php }else {
 						for($i=1;$i<=$bookNum;$i++){?>
-						<tr><?php echo $arr['0'][$i*8];?></td><td><?php echo $array['0'][$i];?></td><?php echo $arr['0'][$i*8+1];?></td><?php echo $arr['0'][$i*8+2];?></td><?php echo $arr['0'][$i*8+$i+2];?></td><?php echo $arr['0'][$i*8+$i+3];?></td><?php echo $arr['0'][$i*8+$i+4];?></td></tr>
+						<tr><td><?php echo substr($arr['0'][$i*8],52,-6)?></td><!--图书编码-->
+							<td><?php echo $array['0'][$i-1];?></td><!-- 续借 substr($array['0'][$i-1],12)-->
+							<td><?php echo substr($arr['0'][$i*8+1],52,-6);?></td><!-- 书名 -->
+							<td><?php echo substr($arr['0'][$i*8+2],52,-6)?></td><!-- 作者 -->
+							<td><?php echo substr($arr['0'][$i*8+3],52,-6) ?></td><!-- 借阅时间 -->
+							<td><?php echo substr($arr['0'][$i*8+4],65,-13)?></td><!-- 归还时间 -->
+							<td><?php echo substr($arr['0'][$i*8+5],52,-6)?></td><!-- 馆藏地 -->
+						</tr>
 						<?php }}?>
 						</thead>
 						<tbody>
@@ -103,14 +111,13 @@ $place      = $arr['0']['5'];
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
-<!--
+	<script src="../public/js/prototype.js"></script>
+	<script>
 	function getInLib(barcode,num)
 	{ 
 		 Element.hide(num);
 		 new Ajax.Updater( barcode,'http://222.206.65.12/reader/ajax_renew.php?bar_code=' + barcode + "&time=" + new Date().getTime());
 	}
--->
 </script>
 
 </body>
