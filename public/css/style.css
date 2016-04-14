@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+body{
+	font-family: "Helvetica Neue","Arial","PingFang SC","Hiragino Sans GB","STHeiti","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+}
+.center{
+	text-align: center;
+	margin: 0 auto;
+}
+.index-header{
+	padding:2em;
+}
+.index-header h1{
+    font-size: 34px;
+    color: #3cc51f;
+    font-weight: 400;
+    margin: 0 15%;
+}
+
+.index-header h2{
+    color: #888;
+    font-size: 14px;
+    font-weight: normal;
+}
+
