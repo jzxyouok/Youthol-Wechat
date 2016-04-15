@@ -17,9 +17,10 @@
 <body>
 	<header class="index-header center">
 		<h1>我的图书馆</h1>
+		<h2>欢迎您，<?php echo substr($nameArray[0][0],14,-37);?></h2>
 	</header>
-	<section calss="container center">
-		<table>
+	<section class="container center">
+		<table class="center">
 			<thead>
 				<tr>
 					<th>图书编码</th>
@@ -40,7 +41,7 @@
 						for($i=1;$i<=$bookNum;$i++){?>
 						<tr><td><?php echo substr($bookArray['0'][$i*8],52,-6)?></td><!--图书编码-->
 							<td><?php echo $buttonArray['0'][$i-1];?></td><!-- 续借 substr($array['0'][$i-1],12)-->
-							<td><?php echo substr($bookArray['0'][$i*8+1],52,-6);?></td><!-- 书名 -->
+							<td><?php echo substr($bookArray['0'][$i*8+1],111,-10);?></td><!-- 书名 -->
 							<td><?php echo substr($bookArray['0'][$i*8+2],52,-6)?></td><!-- 作者 -->
 							<td><?php echo substr($bookArray['0'][$i*8+3],52,-6) ?></td><!-- 借阅时间 -->
 							<td><?php echo substr($bookArray['0'][$i*8+4],65,-13)?></td><!-- 归还时间 -->
