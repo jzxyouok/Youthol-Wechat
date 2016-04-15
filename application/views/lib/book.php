@@ -12,45 +12,44 @@
 	<link rel="stylesheet" href="<?php echo base_url()."public/css/weui.min.css" ?>"/>
 	<!--<link rel="stylesheet" href="<?php echo base_url()."public/css/style.css" ?>"/>-->
 	<link rel="stylesheet/less" href="<?php echo base_url()."public/less/style.less" ?>" />
-	<title>登录|图书馆</title>
+	<title>我的图书馆</title>
 </head>
 <body>
 	<header class="index-header center">
-		<h1>登录图书馆</h1>
+		<h1>我的图书馆</h1>
 	</header>
-	<?php echo validation_errors(); ?>
-
-    <?php echo form_open('lib/login'); ?>
-		<div class="weui_cells weui_cells_form">
-		    <div class="weui_cell">
-		        <div class="weui_cell_hd">
-		            <label class="weui_label">学号</label>
-		        </div>
-		        <div class="weui_cell_bd weui_cell_primary">
-		            <input class="weui_input" type="number" name="sdutnum" placeholder="请输入学号">
-		        </div>
-		    </div>
-		    <div class="weui_cell">
-		        <div class="weui_cell_hd">
-		            <label class="weui_label">密码</label>
-		        </div>
-		        <div class="weui_cell_bd weui_cell_primary">
-		            <input class="weui_input" type="password" name="password" placeholder="初始密码为">
-		        </div>
-		    </div>
-		    <div class="weui_cell weui_cells_checkbox">
-			    <label class="weui_cell weui_check_label" for="s11">
-			        <div class="weui_cell_hd">
-			            <input type="checkbox" class="weui_check" name="remember_pass" id="s11" checked="checked">
-			            <i class="weui_icon_checked"></i>
-			        </div>
-			        <div class="weui_cell_bd weui_cell_primary">
-			            <p>记住密码</p>
-			        </div>
-			    </label>
-			</div>
-	  		<button type="submit" class="weui_btn weui_btn_primary">登录</button>
-		</div>
+	<section calss="container center">
+		<table>
+			<thead>
+				<tr>
+					<th>图书编码</th>
+					<th>续借</th>
+					<th>书名</th>
+					<th>作者</th>
+					<th>借阅时间</th>
+					<th>归还时间</th>
+					<th>馆藏地</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php if(empty($bookArray)){?>
+						<tr>
+							<td colspan="7">客官，近期您没有借书记录欧！</td>
+						</tr>
+						<?php }else {
+						for($i=1;$i<=$bookNum;$i++){?>
+						<tr><td><?php echo substr($bookArray['0'][$i*8],52,-6)?></td><!--图书编码-->
+							<td><?php echo $buttonArray['0'][$i-1];?></td><!-- 续借 substr($array['0'][$i-1],12)-->
+							<td><?php echo substr($bookArray['0'][$i*8+1],52,-6);?></td><!-- 书名 -->
+							<td><?php echo substr($bookArray['0'][$i*8+2],52,-6)?></td><!-- 作者 -->
+							<td><?php echo substr($bookArray['0'][$i*8+3],52,-6) ?></td><!-- 借阅时间 -->
+							<td><?php echo substr($bookArray['0'][$i*8+4],65,-13)?></td><!-- 归还时间 -->
+							<td><?php echo substr($bookArray['0'][$i*8+5],52,-6)?></td><!-- 馆藏地 -->
+						</tr>
+						<?php }}?>
+			</tbody>
+		</table>
+	</section>	
 	<script src="<?php echo base_url()."public/less/dist/less.min.js" ?>"></script>
 </body>
 </html>
