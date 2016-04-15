@@ -29,18 +29,30 @@ class Lib extends CI_Controller {
             $password = $this->input->post('password');
             $html = $this->imitateLogin($sdutnum,$password);
 
-            $creg = "/logout/";
-            $preg = "/<td.*/";
-            $reg = "/<div\sid=\"\w\"><input.*\/>/";
-            preg_match_all($creg, $html, $carr);
-            preg_match_all($preg, $html, $arr);
-            preg_match_all($reg, $html, $array); 
+            $loginReg = "/logout/";
+            $BookReg = "/<td.*/";
+            $buttonReg = "/<div\sid=\"\w\"><input.*\/>/";
+            $nameReg = '/height="11" \/>.*logout/';
+            $numReg = '/<p>.*<b/';//书籍数量
+            preg_match_all($loginReg, $html, $isLogin); //用以判断是否登录
+            preg_match_all($BookReg, $html, $bookArray);
+            preg_match_all($buttonReg, $html, $buttonArray);
+            preg_match_all($nameReg, $html, $nameArray);//用户名
+            preg_match_all($numReg, $html, $numArray);
+            $bookNum = substr($numArray[0][0],45,-25);
+            $bookData['isLogin'] = $isLogin[0][0];
+            $bookData['bookArray'] = $bookArray;
+            $bookData['buttonArray'] = $buttonArray;
+            $bookData['nameArray'] = $nameArray;
+            $bookData['numArray'] = $numArray;
+            $bookData['bookNum'] = $bookNum;
 
-            if(empty($carr[0][0])||$carr[0][0]==null)
+
+            if(empty($isLogin[0][0])||$isLogin[0][0]==null)
             {
                $this->load->view('lib/failure'); 
             }else{
-               $this->load->view('lib/book'); 
+               $this->load->view('lib/book',$bookData); 
             }
             
             //redirect(site_url());
