@@ -6,8 +6,8 @@ class Index extends CI_Controller {
 	public function __construct()
     {
         parent::__construct();
-        $this->load->helper('url','form');
-        $this->load->library('form_validation');
+        $this->load->helper('url');
+       
     }
     
     //加载 首页 视图
