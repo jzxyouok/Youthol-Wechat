@@ -91,7 +91,6 @@ class Lib extends CI_Controller {
         $config['crlf'] = "\r\n";
         $this->email->from('hufy3651@qq.com', 'BYKJ');
         $this->email->to('hi@hufangyun.com');
-
         $this->email->subject('Email Test');
         $this->email->message('Testing the email class.');
         $this->email->send();

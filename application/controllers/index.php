@@ -7,7 +7,6 @@ class Index extends CI_Controller {
     {
         parent::__construct();
         $this->load->helper('url');
-       
     }
     
     //加载 首页 视图

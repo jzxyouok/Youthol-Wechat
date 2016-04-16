@@ -13,7 +13,6 @@ class Lib_model extends CI_Model
 			'password' => $this->input->post('password')
 
 			); 
-
 		return $data;
 	}
 }
