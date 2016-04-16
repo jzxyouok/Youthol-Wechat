@@ -6,7 +6,7 @@
 	<meta name="keywords" contnt="">
 	<meta name="description" content="">
 	<meta name="author" content="hufangyun.com">
-	<meta name="viewport" content="width=device-width," initial-scale="1.0">
+	<meta name="viewport" content="width=device-width" initial-scale="1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="<?php echo base_url()."public/css/weui.min.css" ?>"/>
