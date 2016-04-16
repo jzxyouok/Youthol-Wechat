@@ -6,7 +6,7 @@
 	<meta name="keywords" contnt="">
 	<meta name="description" content="">
 	<meta name="author" content="hufangyun.com">
-	<meta name="viewport" content="width=device-width," initial-scale="1.0">
+	<meta name="viewport" content="width=device-width" initial-scale="1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="<?php echo base_url()."public/css/weui.min.css" ?>"/>
@@ -18,7 +18,12 @@
 	<header class="index-header center">
 		<h1>我的图书馆</h1>
 		<h2>欢迎您，<?php echo substr($nameArray[0][0],14,-37);?></h2>
+		<div class="button_sp_area">
+		    <a href="<?php echo site_url(); ?>" class="weui_btn weui_btn_mini weui_btn_default">返回主页</a>
+		    <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary">到期邮件通知</a>
+        </div>	
 	</header>
+
 	<section class="container center">
 		<table class="center">
 			<thead>
@@ -50,7 +55,16 @@
 						<?php }}?>
 			</tbody>
 		</table>
-	</section>	
+	</section>
 	<script src="<?php echo base_url()."public/less/dist/less.min.js" ?>"></script>
+	<script src="<?php echo base_url()."public/js/jquery.1.12.3.min.js" ?>"></script>
+	<script>
+	function getInLib(barcode)
+	{ 
+         var url = 'http://222.206.65.12/reader/ajax_renew.php?bar_code=' + barcode + '&time=' + new Date().getTime();
+         return url;
+		 
+	}
+</script>
 </body>
 </html>
