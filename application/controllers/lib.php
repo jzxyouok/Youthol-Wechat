@@ -40,7 +40,7 @@ class Lib extends CI_Controller {
             preg_match_all($nameReg, $html, $nameArray);//用户名
             preg_match_all($numReg, $html, $numArray);
             $bookNum = substr($numArray[0][0],45,-25);
-            $bookData['isLogin'] = $isLogin[0][0];
+            $bookData['isLogin'] = $isLogin;
             $bookData['bookArray'] = $bookArray;
             $bookData['buttonArray'] = $buttonArray;
             $bookData['nameArray'] = $nameArray;
@@ -52,10 +52,9 @@ class Lib extends CI_Controller {
             {
                $this->load->view('lib/failure'); 
             }else{
+                //echo $this->sendEmail();
                $this->load->view('lib/book',$bookData); 
             }
-            
-            //redirect(site_url());
         }
     }
 
@@ -72,6 +71,32 @@ class Lib extends CI_Controller {
           $html = $this->curl->get_content($urlBook,$cookie_jar); 
 
           return $html;
+    }
+
+    public function sendEmail()
+    {
+        
+        $this->load->library('email');
+        $config['protocol'] = 'smtp';
+        $config['smtp_host'] = 'ssl://smtp.qq.com';
+        $config['smtp_user'] = 'hufy3651@qq.com';
+        $config['smtp_pass'] = 'zuuxdrnrspcebfcf';
+        $config['smtp_port'] = 465;
+        $config['smtp_timeout'] = 30;
+        $config['mailtype'] = 'text';
+        $config['charset'] = 'utf-8';
+        $config['wordwrap'] = TRUE;
+        $this->email->initialize($config);
+        $this->email->set_newline("\r\n");
+        $config['crlf'] = "\r\n";
+        $this->email->from('hufy3651@qq.com', 'BYKJ');
+        $this->email->to('hi@hufangyun.com');
+
+        $this->email->subject('Email Test');
+        $this->email->message('Testing the email class.');
+        $this->email->send();
+        return $this->email->print_debugger();
+
     }
     
 
