@@ -21,7 +21,7 @@
 			
 	<?php echo validation_errors(); ?>
 
-    <?php echo form_open('lib/addemail'); ?>
+    <?php echo form_open('lib/addemail/'.$sdutnum); ?>
 		<div class="weui_cells weui_cells_form">
 		    <div class="weui_cell">
 		        <div class="weui_cell_hd">
@@ -30,6 +30,7 @@
 		        <div class="weui_cell_bd weui_cell_primary">
 		            <input class="weui_input" type="email" name="email" placeholder="请输入您的常用邮箱">
 		        </div>
+		        <input type="hidden" name="sdutnum" value="<?php echo $sdutnum ?>">
 		    </div>
 		   </div>
 		   <div class="weui_cells">

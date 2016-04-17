@@ -17,10 +17,10 @@
 <body>
 	<header class="index-header center">
 		<h1>我的图书馆</h1>
-		<h2>欢迎您，<?php echo substr($nameArray[0][0],14,-37);?></h2>
+		<h2>欢迎您，<?php echo $username;?></h2>
 		<div class="button_sp_area">
 		    <a href="<?php echo site_url(); ?>" class="weui_btn weui_btn_mini weui_btn_default">返回主页</a>
-		    <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary">到期邮件通知</a>
+		    <a href="<?php echo site_url().'/lib/addemail/'.$sdutnum ?>" class="weui_btn weui_btn_mini weui_btn_primary">到期邮件通知</a>
         </div>	
 	</header>
 

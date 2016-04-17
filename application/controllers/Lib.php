@@ -33,17 +33,19 @@ class Lib extends CI_Controller {
             $BookReg = "/<td.*/";
             $buttonReg = "/<div\sid=\"\w\"><input.*\/>/";
             $nameReg = '/height="11" \/>.*logout/';
-            $numReg = '/<p>.*<b/';//书籍数量
-            preg_match_all($loginReg, $html, $isLogin); //用以判断是否登录
+            $numReg = '/<p>.*<b/';//book number
+            preg_match_all($loginReg, $html, $isLogin); //to judgment whether login
             preg_match_all($BookReg, $html, $bookArray);
             preg_match_all($buttonReg, $html, $buttonArray);
-            preg_match_all($nameReg, $html, $nameArray);//用户名
+            preg_match_all($nameReg, $html, $nameArray);//username
             preg_match_all($numReg, $html, $numArray);
+            $username = substr($nameArray[0][0],14,-37);
             $bookNum = substr($numArray[0][0],45,-25);
+            $bookData['sdutnum'] = $sdutnum;/* after changed session*/
             $bookData['isLogin'] = $isLogin;
             $bookData['bookArray'] = $bookArray;
             $bookData['buttonArray'] = $buttonArray;
-            $bookData['nameArray'] = $nameArray;
+            $bookData['username'] = $username;
             $bookData['numArray'] = $numArray;
             $bookData['bookNum'] = $bookNum;
 
@@ -53,6 +55,10 @@ class Lib extends CI_Controller {
                $this->load->view('lib/failure'); 
             }else{
                 //echo $this->sendEmail();
+               $isHasUser = $this->lib_model->M_getLibUser($sdutnum);
+               if(!$isHasUser){
+                 $this->lib_model->M_addLibUser($sdutnum,$password,$username);
+               }
                $this->load->view('lib/book',$bookData); 
             }
         }
@@ -96,6 +102,27 @@ class Lib extends CI_Controller {
         $this->email->send();
         return $this->email->print_debugger();
 
+    }
+
+    public function addemail()
+    {
+        $data['sdutnum'] = $this->uri->segment(3);//get url sdutnum
+        $this->form_validation->set_rules('email', 'email', 'required',
+            array('required' => '邮箱不能为空'));
+  
+        if ($this->form_validation->run() === FALSE)
+        {
+            $this->load->view('lib/addemail',$data);
+        }else{
+             $isHasEmail = $this->lib_model->M_getLibEmail($data['sdutnum']);
+            if(!$isHasEmail){
+                 $this->lib_model->M_addEmail();
+               }else{
+
+                $this->lib_model->M_updateEmail($data['sdutnum']);
+               }
+            $this->load->view('lib/success');
+        }
     }
     
 
