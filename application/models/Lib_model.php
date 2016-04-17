@@ -58,6 +58,7 @@ class Lib_model extends CI_Model
         $this->db->where('sdutnum', $sdutnum);
         return $this->db->update('library_email', $data);
     }
+
 }
 
 
