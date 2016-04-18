@@ -22,8 +22,8 @@ class Lib extends CI_Controller {
   
         if ($this->form_validation->run() === FALSE)
         {
-            //$this->email();
-            $this->load->view('lib/index');
+            $this->email();
+            //$this->load->view('lib/index');
         }else{
 
             $sdutnum = $this->input->post('sdutnum');
@@ -81,26 +81,16 @@ class Lib extends CI_Controller {
         return $bookData;
     }
 
-    public function sendEmail()
+    public function sendEmail($email,$title,$content)
     {
         
         $this->load->library('email');
-        $config['protocol'] = 'smtp';
-        $config['smtp_host'] = 'ssl://smtp.qq.com';
-        $config['smtp_user'] = 'hufy3651@qq.com';
-        $config['smtp_pass'] = 'zuuxdrnrspcebfcf';
-        $config['smtp_port'] = 465;
-        $config['smtp_timeout'] = 30;
-        $config['mailtype'] = 'text';
-        $config['charset'] = 'utf-8';
-        $config['wordwrap'] = TRUE;
-        $this->email->initialize($config);
+        
         $this->email->set_newline("\r\n");
-        $config['crlf'] = "\r\n";
-        $this->email->from('hufy3651@qq.com', 'BYKJ');
-        $this->email->to('hi@hufangyun.com');
-        $this->email->subject('Email Test');
-        $this->email->message('Testing the email class.');
+        $this->email->from('hufy3651@qq.com', '青春在线|程小猿');
+        $this->email->to($email);
+        $this->email->subject($title);
+        $this->email->message($content);
         $this->email->send();
         return $this->email->print_debugger();
 
@@ -126,13 +116,31 @@ class Lib extends CI_Controller {
             $this->load->view('lib/success');
         }
     }
-    /**
-    1、取得学号 -> 取得学号 密码 -> 获取
-     */
     public function email()
     {
-         $data = $this->lib_model->M_getLibEmail($sdutnum = null);
-         print_r($data);
+         $data = $this->lib_model->M_getUserAndEmail();
+         foreach ($data as $keys){ 
+             $bookData = $this->imitateLogin($keys['sdutnum'],$keys['lib_pwd']);
+             for($i=1;$i<=$bookData['bookNum'];$i++)
+             {
+                $returnTime = substr($bookData['bookArray']['0'][$i*8+4],65,-13);
+
+                $day = floor((strtotime($returnTime))/86400 - strtotime(date('y-m-d'))); /*   60 * 60 * 24   */
+
+                $bookName = substr($bookData['bookArray']['0'][$i*8+1],111,-10);
+
+                $title = "山东理工图书到期提醒";
+                $content = $keys['sdutnum'].",您的".$bookName."将于".$returnTime."到期";/*add link about address in here.*/
+
+                if($day<=2){
+                    echo "图书还未到期";
+                }else{
+                    $this->sendEmail($keys['email'],$title,$content);
+                    echo "邮件发送完成";
+                } 
+            }
+
+         }
     }
 
 
