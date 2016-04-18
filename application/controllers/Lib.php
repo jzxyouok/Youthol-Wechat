@@ -22,26 +22,25 @@ class Lib extends CI_Controller {
   
         if ($this->form_validation->run() === FALSE)
         {
-            $this->email();
-            //$this->load->view('lib/index');
+            $this->load->view('lib/index');
         }else{
 
             $sdutnum = $this->input->post('sdutnum');
             $password = $this->input->post('password');
             $bookData = $this->imitateLogin($sdutnum,$password);
 
-
             if($bookData['isLogin'][0]) //judgment user whether login
             {
                  //echo $this->sendEmail();
                $isHasUser = $this->lib_model->M_getLibUser($sdutnum);
-               if(!$isHasUser){
+               if(!$isHasUser)
+               {
                  $this->lib_model->M_addLibUser($sdutnum,$password,$bookData['username']);
                }
                $this->load->view('lib/book',$bookData); 
-               
-               }else{
-               $this->load->view('lib/failure'); 
+              
+            }else{
+                 $this->load->view('lib/failure'); 
             }
         }
     }
@@ -114,6 +113,7 @@ class Lib extends CI_Controller {
                 $this->lib_model->M_updateEmail($data['sdutnum']);
                }
             $this->load->view('lib/success');
+            $this->email();
         }
     }
     public function email()
