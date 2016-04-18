@@ -59,6 +59,15 @@ class Lib_model extends CI_Model
         return $this->db->update('library_email', $data);
     }
 
+    public function M_getUserAndEmail()
+    {
+        $this->db->select('library_user.sdutnum,library_user.lib_pwd,email');
+        $this->db->from('library_user,library_email');
+        $this->db->where('library_email.sdutnum = library_user.sdutnum');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
 }
 
 
