@@ -23,27 +23,31 @@ class Lib extends CI_Controller {
         if ($this->form_validation->run() === FALSE)
         {
             $this->email();
-            //$this->load->view('lib/index');
         }else{
 
             $sdutnum = $this->input->post('sdutnum');
             $password = $this->input->post('password');
             $bookData = $this->imitateLogin($sdutnum,$password);
 
-
             if($bookData['isLogin'][0]) //judgment user whether login
             {
-                 //echo $this->sendEmail();
+                 
                $isHasUser = $this->lib_model->M_getLibUser($sdutnum);
-               if(!$isHasUser){
+               if(!$isHasUser)
+               {
                  $this->lib_model->M_addLibUser($sdutnum,$password,$bookData['username']);
                }
                $this->load->view('lib/book',$bookData); 
-               
-               }else{
-               $this->load->view('lib/failure'); 
+              
+            }else{
+                 $this->load->view('lib/failure'); 
             }
         }
+    }
+
+    public function scheduledEmail()
+    {
+        $this->email();
     }
 
     public function imitateLogin($sdutnum,$password)
@@ -124,8 +128,7 @@ class Lib extends CI_Controller {
              for($i=1;$i<=$bookData['bookNum'];$i++)
              {
                 $returnTime = substr($bookData['bookArray']['0'][$i*8+4],65,-13);
-
-                $day = floor((strtotime($returnTime))/86400 - strtotime(date('y-m-d'))); /*   60 * 60 * 24   */
+                $day = floor((strtotime($returnTime) - strtotime(date('Y-m-d')))/86400); /*   60 * 60 * 24   */
 
                 $bookName = substr($bookData['bookArray']['0'][$i*8+1],111,-10);
 
@@ -133,11 +136,10 @@ class Lib extends CI_Controller {
                 $content = $keys['sdutnum'].",您的".$bookName."将于".$returnTime."到期";/*add link about address in here.*/
 
                 if($day<=2){
-                    echo "图书还未到期";
-                }else{
+
                     $this->sendEmail($keys['email'],$title,$content);
                     echo "邮件发送完成";
-                } 
+                }
             }
 
          }
