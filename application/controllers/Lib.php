@@ -31,7 +31,7 @@ class Lib extends CI_Controller {
 
             if($bookData['isLogin'][0]) //judgment user whether login
             {
-                 //echo $this->sendEmail();
+                 
                $isHasUser = $this->lib_model->M_getLibUser($sdutnum);
                if(!$isHasUser)
                {
@@ -43,6 +43,11 @@ class Lib extends CI_Controller {
                  $this->load->view('lib/failure'); 
             }
         }
+    }
+
+    public function scheduledEmail()
+    {
+        $this->email();
     }
 
     public function imitateLogin($sdutnum,$password)
@@ -133,8 +138,7 @@ class Lib extends CI_Controller {
                 $content = $keys['sdutnum'].",您的".$bookName."将于".$returnTime."到期";/*add link about address in here.*/
 
                 if($day<=2){
-                    echo "图书还未到期";
-                }else{
+               
                     $this->sendEmail($keys['email'],$title,$content);
                     echo "邮件发送完成";
                 } 
