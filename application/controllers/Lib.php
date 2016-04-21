@@ -22,7 +22,7 @@ class Lib extends CI_Controller {
   
         if ($this->form_validation->run() === FALSE)
         {
-            $this->load->view('lib/index');
+            $this->email();
         }else{
 
             $sdutnum = $this->input->post('sdutnum');
@@ -118,7 +118,6 @@ class Lib extends CI_Controller {
                 $this->lib_model->M_updateEmail($data['sdutnum']);
                }
             $this->load->view('lib/success');
-            $this->email();
         }
     }
     public function email()
@@ -129,8 +128,7 @@ class Lib extends CI_Controller {
              for($i=1;$i<=$bookData['bookNum'];$i++)
              {
                 $returnTime = substr($bookData['bookArray']['0'][$i*8+4],65,-13);
-
-                $day = floor((strtotime($returnTime))/86400 - strtotime(date('y-m-d'))); /*   60 * 60 * 24   */
+                echo $day = (strtotime($returnTime) - strtotime(date('Y-m-d')))/86400; /*   60 * 60 * 24   */
 
                 $bookName = substr($bookData['bookArray']['0'][$i*8+1],111,-10);
 
@@ -138,10 +136,10 @@ class Lib extends CI_Controller {
                 $content = $keys['sdutnum'].",您的".$bookName."将于".$returnTime."到期";/*add link about address in here.*/
 
                 if($day<=2){
-               
+
                     $this->sendEmail($keys['email'],$title,$content);
                     echo "邮件发送完成";
-                } 
+                }
             }
 
          }
