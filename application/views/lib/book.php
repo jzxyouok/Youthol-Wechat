@@ -6,7 +6,7 @@
 	<meta name="keywords" contnt="">
 	<meta name="description" content="">
 	<meta name="author" content="hufangyun.com">
-	<meta name="viewport" content="width=device-width" initial-scale="1.0">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="<?php echo base_url()."public/css/weui.min.css" ?>"/>
@@ -20,7 +20,8 @@
 		<h2>欢迎您，<?php echo $username;?></h2>
 		<div class="button_sp_area">
 		    <a href="<?php echo site_url(); ?>" class="weui_btn weui_btn_mini weui_btn_default">返回主页</a>
-		    <a href="<?php echo site_url().'/lib/addemail/'.$sdutnum ?>" class="weui_btn weui_btn_mini weui_btn_primary">到期邮件通知</a>
+		    <a href="<?php echo site_url().'/lib/addemail/'.$sdutnum /*以后修改为session*/  ?>" class="weui_btn weui_btn_mini weui_btn_primary">到期邮件通知</a>
+                                                       
         </div>	
 	</header>
 
